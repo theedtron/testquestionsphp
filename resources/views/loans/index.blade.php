@@ -3,6 +3,8 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Loans') }}
         </h2>
+
+        <a href="{{ route('customers') }}" class="bg-blue-500 text-black px-4 py-2 rounded-md">Customers</a>
     </x-slot>
 
     <div class="py-12">
@@ -31,6 +33,9 @@
                                 <th class="px-6 py-3 bg-gray-50 text-left">
                                     <span class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Balance</span>
                                 </th>
+                                <th class="px-6 py-3 bg-gray-50 text-left">
+                                    <span class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Actions</span>
+                                </th>
                             </tr>
                             </thead>
 
@@ -38,10 +43,10 @@
                             @foreach($loans as $loan)
                                 <tr class="bg-white">
                                     <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                        {{ $loan->name }}
+                                        {{ $loan->customer->name }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                        {{ $loan->code }}
+                                        {{ $loan->loanProduct->name }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                         {{ $loan->principle }}
@@ -54,6 +59,15 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                         {{ $loan->balance }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                        @if($loan->status_id == 1)
+                                            <a href="{{ route('loan.approve', $loan->id) }}" class="bg-blue-500 text-black px-4 py-2 rounded-md">Approve</a>
+                                        @elseif($loan->status_id == 2)
+                                            <a href="{{ route('loan.disburse', $loan->id) }}" class="bg-blue-500 text-black px-4 py-2 rounded-md">Disburse</a>
+                                        @else
+                                            <a href="#" class="bg-blue-500 text-black px-4 py-2 rounded-md">Repay</a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

@@ -29,21 +29,33 @@ class CustomerController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.Customer::class],
-            'dob' => ['required', 'string', 'max:255'],
+            'dob' => ['required', 'date', 'before_or_equal:2007-01-01'],
             'national_id' => ['required', 'string', 'max:255', 'unique:'.Customer::class],
             'address' => ['required', 'string', 'max:255'],
         ]);
 
         $create = $this->customerRepo->insert($request->all());
         if($create){
-            return view('customer.index');
+            return redirect('customers')->with('success','Customer created');
+        }else{
+            return redirect('customers')->with('error','Something went wrong');
         }
     }
 
-    public function update(Request $request, $id){
+
+    public function update($id){
+        $customer = $this->customerRepo->find($id);
+        return view('customer.update')
+            ->with('customer_id',$id)
+            ->with('customer',$customer);
+
+    }
+
+    public function updatePost(Request $request){
+        $id = $request->customer_id;
         $update = $this->customerRepo->update($id, $request->all());
         if($update){
-            return view('customer.index');
+            return redirect('customers');
         }
     }
 }

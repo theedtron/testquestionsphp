@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Customer;
 use App\Repositories\Interfaces\CustomerRepositoryInterface;
+use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -17,6 +18,8 @@ class CustomerRepository implements CustomerRepositoryInterface {
         return Customer::query()->find($id);
     }
     public function insert(Array $attributes) : Bool{
+        $attributes['dob'] = Carbon::parse($attributes['dob'])->toDateString();
+        $attributes['phone'] = '254'.substr($attributes['phone'],-9);
         Customer::create($attributes);
         return true;
     }

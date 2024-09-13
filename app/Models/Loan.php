@@ -17,12 +17,12 @@ class Loan extends Model
         'status_id'
     ];
 
-    public function loanProducts(): BelongsTo
+    public function loanProduct(): BelongsTo
     {
         return $this->belongsTo(LoanProduct::class,'product_id');
     }
 
-    public function customers() : BelongsTo
+    public function customer() : BelongsTo
     {
         return $this->belongsTo(Customer::class);
     }

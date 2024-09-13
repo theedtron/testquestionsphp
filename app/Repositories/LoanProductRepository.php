@@ -5,22 +5,28 @@ namespace App\Repositories;
 use App\Models\Currency;
 use App\Models\LoanProduct;
 use App\Repositories\Interfaces\LoanProductRepositoryInterface;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 
 
 class LoanProductRepository implements LoanProductRepositoryInterface {
-    public function all() : Paginator
+    public function all() : LengthAwarePaginator
     {
-        return LoanProduct::query()->paginate(15);
+        return LoanProduct::query()->with('currency','loanProduct')->paginate(15);
     }
     public function find(String $id) : ?LoanProduct
     {
         return LoanProduct::query()->find($id);
     }
     public function insert(Array $attributes) : Bool{
-        LoanProduct::create($attributes);
-        return true;
+        $create = LoanProduct::query()->create($attributes);
+        if($create){
+            return true;
+        }else{
+            return false;
+        }
+
     }
     public function update(String $id, Array $attributes) : Bool{
         $get_customer = LoanProduct::query()->find($id);

@@ -30,18 +30,35 @@ class LoanProductController extends Controller
         $request->validate([
             'name' => 'required',
             'code' => 'required',
-            'min_amoun' => 'required',
+            'min_amount' => 'required',
             'max_amount' => 'required',
             'interest_rate' => 'required',
             'currency_id' => 'required'
         ]);
-        print_r($request->all());exit;
 
         $store = $this->loanProductRepo->insert($request->all());
         if($store){
-            return view('loanProducts.new')->with('success','Loan Product Created');
+            return redirect('loanproducts');
         }else{
-            return view('loanProducts.new')->with('error','Something went wrong');
+            return redirect('loanproducts');
+        }
+    }
+
+    public function update($id){
+        $product = $this->loanProductRepo->find($id);
+        $currenies = $this->loanProductRepo->currencies();
+        return view('loanProducts.update')
+            ->with('loan_product_id',$id)
+            ->with('currencies',$currenies)
+            ->with('product',$product);
+
+    }
+
+    public function updatePost(Request $request){
+        $id = $request->loan_product_id;
+        $update = $this->loanProductRepo->update($id, $request->all());
+        if($update){
+            return redirect('loanproducts');
         }
     }
 }

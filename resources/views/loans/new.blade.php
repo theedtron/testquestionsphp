@@ -8,16 +8,16 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <form method="POST" action="{{ route('customers/post') }}">
+                <form method="POST" action="{{ route('loan.save') }}">
                     @csrf
 
                     <!-- Customer Id -->
-                    <x-text-input id="customer_id" class="block mt-1 w-full" type="text" name="name" :value="old('name', $customer_id)" hidden/>
+                    <x-text-input id="customer_id" class="block mt-1 w-full" type="text" name="customer_id" :value="old('customer_id', $customer_id)" hidden/>
 
                     <!-- Product -->
                     <div class="mt-4">
-                        <x-input-label for="prodcut_id" :value="__('Product Id')" />
-                        <select id="prodcut_id" name="prodcut_id" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                        <x-input-label for="product_id" :value="__('Product Id')" />
+                        <select id="product_id" name="product_id" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                             @foreach($products as $product)
                                 <option value="{{ $product->id }}">{{ $product->name }}</option>
                             @endforeach

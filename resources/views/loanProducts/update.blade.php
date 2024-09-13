@@ -8,9 +8,11 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <form method="POST" action="{{ route('customers/post') }}">
+                <form method="POST" action="{{ route('loanproduct.update.post') }}">
                     @csrf
 
+                    <!-- Product Id -->
+                    <x-text-input id="loan_product_id" class="block mt-1 w-full" type="text" name="loan_product_id" :value="old('loan_product_id', $loan_product_id)" hidden/>
                     <!-- Name -->
                     <div>
                         <x-input-label for="name" :value="__('Name')" />

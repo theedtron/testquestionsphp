@@ -3,6 +3,7 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Customers') }}
         </h2>
+        <a href="{{ url('customers/create') }}" class="bg-blue-500 text-black px-4 py-2 rounded-md">Create Customer</a>
     </x-slot>
 
     <div class="py-12">
@@ -59,7 +60,8 @@
                                         {{ $customer->address }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
-                                        <a href="{{ route('loan.create', $customer->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded-md">Request Loan</a>
+                                        <a href="{{ route('loan.create', $customer->id) }}" class="bg-blue-500 text-black px-4 py-2 rounded-md">Request Loan</a>
+                                        <a href="{{ route('customers.create.update', $customer->id) }}" class="bg-blue-500 text-black px-4 py-2 rounded-md">Edit</a>
                                     </td>
                                 </tr>
                             @endforeach

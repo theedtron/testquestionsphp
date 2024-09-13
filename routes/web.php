@@ -24,18 +24,22 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [CustomerController::class, 'index'])->name('customers');
         Route::get('create', [CustomerController::class, 'create']);
         Route::post('create/post', [CustomerController::class, 'store'])->name('customers.save');
-        Route::post('create/update', [CustomerController::class, 'update'])->name('customers.update');
+        Route::get('create/update/{id}', [CustomerController::class, 'update'])->name('customers.create.update');
+        Route::post('update/post', [CustomerController::class, 'updatePost'])->name('customers.update.post');
     });
     Route::group(['prefix' => 'loanproducts'], function(){
         Route::get('/', [LoanProductController::class, 'index'])->name('loan.products');
         Route::get('create', [LoanProductController::class, 'create']);
         Route::post('create/save', [LoanProductController::class, 'store']);
-        Route::post('create/update', [LoanProductController::class, 'update'])->name('loanproduct.update');
+        Route::get('create/update/{id}', [LoanProductController::class, 'update'])->name('loanproduct.create.update');
+        Route::post('update/post', [LoanProductController::class, 'updatePost'])->name('loanproduct.update.post');
     });
     Route::group(['prefix' => 'loans'], function(){
         Route::get('/', [LoanController::class, 'index'])->name('loans');
         Route::get('create/{customer_id}', [LoanController::class, 'create'])->name('loan.create');
-        Route::post('create/save', [LoanController::class, 'save'])->name('loan.save');
+        Route::post('save', [LoanController::class,'storeLoan'])->name('loan.save');
+        Route::get('approve/{loanId}', [LoanController::class,'approveLoan'])->name('loan.approve');
+        Route::get('disburse/{loanId}', [LoanController::class,'disburseLoan'])->name('loan.disburse');
     });
 
     Route::get('users', [UserController::class, 'index'])->name('users');

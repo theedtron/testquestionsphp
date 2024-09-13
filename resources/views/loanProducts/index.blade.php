@@ -3,6 +3,7 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Loan Products') }}
         </h2>
+        <a href="{{ url('loanproducts/create') }}" class="bg-blue-500 text-black px-4 py-2 rounded-md">Create Loan Product</a>
     </x-slot>
 
     <div class="py-12">
@@ -31,6 +32,9 @@
                                 <th class="px-6 py-3 bg-gray-50 text-left">
                                     <span class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Currency</span>
                                 </th>
+                                <th class="px-6 py-3 bg-gray-50 text-left">
+                                    <span class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Actions</span>
+                                </th>
                             </tr>
                             </thead>
 
@@ -53,7 +57,10 @@
                                         {{ $product->interest_rate }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                        {{ $product->currency_id }}
+                                        {{ $product->currency->currency_name}}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                        <a href="{{ route('loanproduct.create.update', $product->id)}}" class="bg-blue-500 text-black px-4 py-2 rounded-md">Edit</a>
                                     </td>
                                 </tr>
                             @endforeach
